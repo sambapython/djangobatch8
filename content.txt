@@ -1,0 +1,40 @@
+django architecture
+django installation
+git(how to setup, clone, add, commit, push, pull)
+sample project(content:)
+design database(excel, what is the need of relations)
+basic flow(request and response process with django dev server)
+how to create project, app, database structure creation(makemigrations, migrate), runserver
+django admin
+models(abstract models, proxy models, models, inherited models)
+CRUD operations of model
+image, doc file upload.
+relations in models(primarykey, foreignkey, manytomany, and how to achieve one2many.)
+views(function based views)
+static, html, css, bootstrap, django template language
+forms(forms, modelsforms). form validations
+Basic project completed.
+problems in the project
+views(class based views and generic views.)
+authentication(login, session, logout)
+django rest framework:
+     need of APIS
+     API view
+     serializers(validate request, convert request data)
+     authentication: Basic and token based
+     unitest cases
+pagination
+unittest cases
+middleware( error handling, request tracking)
+signaling concept
+cache management
+maintain multiple databases for your application
+formset
+deploying application using gunicorn as webserver, nginx as proxy server
+working with some other apps which has API support
+
+email templating
+payment gateway
+singlesignon(gmail, facebooku)
+write own management commands
+how to run management command from setup.py

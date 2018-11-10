@@ -1,0 +1,25 @@
+Django installation:
+pip install django
+
+python
+
+>>> import django
+>>> djang0.__version__:  it should show 1.11. if it shows anthting
+
+need to create virtualenv for your current project purpose
+
+pip install virtualenv
+
+install python27
+
+virtualenv env1 --python=path of python.exe of python2.7
+
+djb8\Scripts\activate
+
+after this type python. it should show 2.7 version
+
+come out from python prompt
+
+pip install django
+
+check the django version again to make sure that it is installed 1.11

@@ -1,0 +1,3 @@
+pgmanager(add pgs,update pgs, allocate rooms in pgs, check the reports)
+student(search for pgs and available rooms, room charges)
+admin(can maintain out project)
