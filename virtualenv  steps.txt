@@ -74,3 +74,22 @@ In [4]: vedha= {"name":"vedhanvesh", "cell":"9676622024","email":"ve
 In [5]: vedhanvesh = PGManager(**vedha)
 
 In [6]: vedhanvesh.save()
+: PGManager.objects.get(id=1)
+Out[5]: <PGManager: PGManager object>
+
+In [6]: PGManager.objects.get(id=2)
+Out[6]: <PGManager: PGManager object>
+
+In [7]: PGManager.objects.all()
+Out[7]: <QuerySet [<PGManager: PGManager object>, <PGManager: PGManager object>]>
+
+In [8]: PGManager.objects.all()[0]
+Out[8]: <PGManager: PGManager object>
+
+In [9]: jay_insta=  PGManager.objects.get(id=1)
+
+In [10]: ameerpet = PG(name="ameerpet guest house", address="ameerpe
+    ...: t", pgmanager=jay_insta)
+
+In [11]: ameerpet.save()
+
