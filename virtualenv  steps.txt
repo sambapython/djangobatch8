@@ -1,0 +1,76 @@
+Django installation:
+pip install django
+
+python
+
+>>> import django
+>>> djang0.__version__:  it should show 1.11. if it shows anthting
+
+need to create virtualenv for your current project purpose
+
+pip install virtualenv
+
+install python27
+
+virtualenv env1 --python=path of python.exe of python2.7
+
+djb8\Scripts\activate
+
+after this type python. it should show 2.7 version
+
+come out from python prompt
+
+pip install django
+
+check the django version again to make sure that it is installed 1.11
+
+Add the models in the app models.py file like below.
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+from django.db import models
+
+# Create your models here.
+class PGManager(models.Model):
+	# pg_id = models.IntegerField(primary_key=True)
+	gender_choices = [('M',"Male"),
+						("F","Female")]
+	name=models.CharField(max_length=60)
+	gender=models.CharField(choices=gender_choices,
+		max_length=2)
+	cell = models.CharField(max_length=14)
+	email = models.EmailField(unique=True)
+	status = models.BooleanField(default=True)
+class PG(models.Model):
+	name = models.CharField(max_length=60)
+	address=models.TextField(max_length=250)
+	pgmanager=models.ForeignKey(PGManager)
+	status = models.BooleanField(default=True)
+	class Meta:
+		db_table="pg"
+
+
+
+__ database commands ----
+execute the below commands to effect into database.
+
+python manage.py makemigrations
+python manage.py migrate
+
+Shell API
+----------
+
+python manage.py shell
+ it will show the shell and can interact with database using app model classes
+ In [1]: from pgmanager.models import PGManager, PG
+
+In [2]: jay = PGManager(name="jayaram",cell="9676622023",email="jay@
+   ...: gmail.com",gender="M")
+
+In [3]: jay.save()
+In [4]: vedha= {"name":"vedhanvesh", "cell":"9676622024","email":"ve
+   ...: dha@gmail.com","gender":"M"}
+
+In [5]: vedhanvesh = PGManager(**vedha)
+
+In [6]: vedhanvesh.save()
