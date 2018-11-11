@@ -16,9 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.http import HttpResponse
-from pgmanager.views import pgm_create_view
+from pgmanager.views import pgm_create_view, pgm_update_view,\
+pgm_delete_view
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^pgmanager_create/', pgm_create_view),
+    url(r'^pgmanager_update/([0-9]+)', pgm_update_view),
+    url(r'^pgmanager_delete/([0-9]+)', pgm_delete_view),
 
 ]

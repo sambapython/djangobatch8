@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h1>PGMANAGER deletion</h1>
+	<h4>{{ message }}</h4>
+	<form method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" name="" value="CONFIRM DELETE">
+	</form>
+</body>
+</html>
