@@ -31,7 +31,8 @@ class PGManager(models.Model):
 class PG(models.Model):
 	name = models.CharField(max_length=60)
 	address=models.TextField(max_length=250)
-	pgmanager=models.ForeignKey(PGManager)
+	pgmanager=models.ForeignKey(PGManager, 
+		on_delete=models.PROTECT)
 	status = models.BooleanField(default=True)
 	class Meta:
 		db_table="pg"
@@ -44,7 +45,7 @@ class Room(models.Model):
 	cost=models.IntegerField()
 	strength=models.IntegerField(blank=True, default=1)
 	status=models.BooleanField(default=True)
-	pg = models.ForeignKey(PG)
+	pg = models.ForeignKey(PG, on_delete=models.PROTECT)
 
 
 

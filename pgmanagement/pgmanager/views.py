@@ -1,20 +1,26 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from pgmanager.models import PGManager
 from pgmanager.forms import PGManagerForm
 
 # Create your views here.
+def pgmanagers_view(request):
+	objects=PGManager.objects.filter(status=True)
+	return render(request, "pgmanager/pgmanagers.html",
+		{"data":objects})
+
 def pgm_delete_view(request, pk):
 	message=""
 	pgm_instance = PGManager.objects.get(id=pk)
 	form = PGManagerForm(instance=pgm_instance)
 	if request.method=="POST":
-		pgm_instance.delete()
+		pgm_instance.status=False
+		pgm_instance.save()
 		message="record deleted successfully!!"
-		form = PGManagerForm()
+		return redirect("/pgmanagers/")
 	return render(request,"pgmanager/pgm_delete_form.html",
 		{"message":message,"form":form})
 
@@ -26,7 +32,7 @@ def pgm_update_view(request, pk):
 			instance=pgm_instance)
 		if form.is_valid():
 			form.save()
-			message="PGMANAGER updated successfully"
+			return redirect("/pgmanagers/")
 		else:
 			message=form._errors
 	pgm_instance=PGManager.objects.get(id=pk)
@@ -41,19 +47,11 @@ def pgm_create_view(request):
 	message=""
 	form = PGManagerForm()
 	if request.method=="POST":
-		#data = request.POST
 		try:
-			'''
-			pgm = PGManager(name=data["name"],
-				gender=data["gender"],
-				email=data["email"],
-				cell=data["cell"])
-			pgm.save()
-			'''
 			form=PGManagerForm(data=request.POST)
 			if form.is_valid():
 				form.save()
-				message="pgmanager created successfully"
+				return redirect("/pgmanagers/")
 			else:
 				message=form._errors
 		except Exception as err:
