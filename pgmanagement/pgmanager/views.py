@@ -7,10 +7,31 @@ from pgmanager.models import PGManager
 from pgmanager.forms import PGManagerForm
 
 # Create your views here.
+def home_view(request):
+	return render(request,"pgmanager/home.html")
+def index_view(request):
+	return render(request,"pgmanager/base.html")
+
 def pgmanagers_view(request):
-	objects=PGManager.objects.filter(status=True)
+	
+	form = PGManagerForm()
+	search_dict = {"status": True}
+	if request.method=="POST":
+		search_form=request.POST
+		
+		name=search_form["name"]
+		gender = search_form["gender"]
+		email = search_form["email"]
+		if name:
+			search_dict["name"]=name
+		if gender:
+			search_dict["gender"] =gender
+		if email:
+			search_dict["email"]=email
+
+	objects=PGManager.objects.filter(**search_dict)
 	return render(request, "pgmanager/pgmanagers.html",
-		{"data":objects})
+		{"data":objects,"form":form})
 
 def pgm_delete_view(request, pk):
 	message=""
@@ -55,7 +76,7 @@ def pgm_create_view(request):
 			else:
 				message=form._errors
 		except Exception as err:
-			print "ERROR:",err
+			print ("ERROR:%s"%err)
 			message="creation failed: %s"%err
 
 	return render(request,"pgmanager/pgm_create_form.html",

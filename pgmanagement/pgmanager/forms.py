@@ -4,4 +4,6 @@ class PGManagerForm(forms.ModelForm):
 	class Meta:
 		model=PGManager
 		fields=("name","gender","cell","email") #"__all__"
+#class PGManageSeacrhForm(forms.Form):
+
 

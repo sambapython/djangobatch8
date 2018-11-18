@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	{% block header%}
+	<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">PGMANAGEMENT</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li class="active"><a href="/home/">Home</a></li>
+	      <li><a href="#">REPORTS</a></li>
+	      <li><a href="#">SEARCH FOR PG</a></li>
+	    </ul>
+	  </div>
+	</nav>
+	{% endblock %}
+	<div class="container">
+	{% block content %}
+		SAMPLE BODY
+	{% endblock %}
+	</div>
+	{% block footer%}
+	<div class="footer">
+		<p>This is footer</p>
+	</div>
+	{% endblock %}
+</body>
+</html>

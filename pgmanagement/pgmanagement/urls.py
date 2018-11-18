@@ -17,12 +17,13 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.http import HttpResponse
 from pgmanager.views import pgm_create_view, pgm_update_view,\
-pgm_delete_view, pgmanagers_view
+pgm_delete_view, pgmanagers_view, index_view, home_view
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^pgmanager_create/', pgm_create_view),
     url(r'^pgmanager_update/([0-9]+)', pgm_update_view),
     url(r'^pgmanager_delete/([0-9]+)', pgm_delete_view),
     url(r'^pgmanagers/', pgmanagers_view),
-
+    url(r'^$',index_view),
+    url(r'^home/', home_view),
 ]

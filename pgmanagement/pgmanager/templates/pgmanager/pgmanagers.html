@@ -1,13 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-
-</head>
-<body>
+{% extends 'pgmanager/base.html'%}
+{% block content%}
 	<h1>PGMANAGERS</h1>
+	<div class="row">
+		<form class="form-horizontal" method="post">
+			{% csrf_token %}
+			Name: <input type="text" name="name">
+			Gender: <select name="gender">
+				<option></option>
+				<option value="M">Male</option>
+				<option value="F"> Female</option>
+			</select>
+			Email: <input type="text" name="email">
+			<input type="submit" name="">
+		</form>
+	
+    </div>
+    <div class="row">
 	<a href="/pgmanager_create/">CREATE PGMANAGER</a>
-
 		<table border=2>
 			<thead>
 				<tr>
@@ -35,5 +44,5 @@
 				{% endfor %}
 			</tbody>
 		</table>
-</body>
-</html>
+	</div>
+{% endblock %}
