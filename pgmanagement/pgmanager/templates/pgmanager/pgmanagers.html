@@ -4,19 +4,25 @@
 	<div class="row">
 		<form class="form-horizontal" method="post">
 			{% csrf_token %}
-			Name: <input type="text" name="name">
+			{{form.as_p}}
+			<!-- Name: <input type="text" name="name">
 			Gender: <select name="gender">
 				<option></option>
 				<option value="M">Male</option>
 				<option value="F"> Female</option>
 			</select>
-			Email: <input type="text" name="email">
+			Email: <input type="text" name="email"> -->
 			<input type="submit" name="">
 		</form>
 	
     </div>
     <div class="row">
 	<a href="/pgmanager_create/">CREATE PGMANAGER</a>
+	<p>#records:{{page_details.records}},
+	   #pages: {{ page_details.num_page}},
+	   #current_page: {{ page_details.currentpage}},
+	   #recordsperpage:{{ page_details.recordsperpage}}
+	</p>
 		<table border=2>
 			<thead>
 				<tr>

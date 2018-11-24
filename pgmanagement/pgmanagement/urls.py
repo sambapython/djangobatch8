@@ -17,7 +17,8 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.http import HttpResponse
 from pgmanager.views import pgm_create_view, pgm_update_view,\
-pgm_delete_view, pgmanagers_view, index_view, home_view
+pgm_delete_view, pgmanagers_view, index_view, home_view, register_view,\
+login_view
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^pgmanager_create/', pgm_create_view),
@@ -26,4 +27,7 @@ urlpatterns = [
     url(r'^pgmanagers/', pgmanagers_view),
     url(r'^$',index_view),
     url(r'^home/', home_view),
+    url(r'^register/', register_view),
+    url(r'^register/', register_view),
+    url(r'^login/', login_view),
 ]
