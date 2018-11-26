@@ -18,6 +18,13 @@
 	      <li class="active"><a href="/home/">Home</a></li>
 	      <li><a href="#">REPORTS</a></li>
 	      <li><a href="#">SEARCH FOR PG</a></li>
+	      {% if 'username' in request.session %}
+	      	<li><a href="/signout/">SIGNOUT</a></li>
+	      	<li> <a href="">WELCOME {{ request.session.username }}</a></li>
+	      {% else %}
+	      	<li><a href="/register/">REGISTER</a></li>
+			<li><a href="/login/">LOGIN</a></li>
+	      {% endif %}
 	    </ul>
 	  </div>
 	</nav>

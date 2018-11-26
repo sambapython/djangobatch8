@@ -1,5 +1,5 @@
 from django import forms
-from pgmanager.models import PGManager
+from pgmanager.models import PGManager, UserProfile
 class PGManagerForm(forms.ModelForm):
 	class Meta:
 		model=PGManager
@@ -12,5 +12,9 @@ class PGManagerSeacrhForm(forms.Form):
 	cell = forms.CharField(max_length=14, required=False)
 	email = forms.EmailField(required=False)
 	page = forms.IntegerField(required=False)
+class UserPfrofileCreation(forms.ModelForm):
+	class Meta:
+		model = UserProfile
+		fields=("username","password","email","cell","role")
 
 

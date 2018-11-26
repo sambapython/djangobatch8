@@ -3,34 +3,55 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from pgmanager.models import PGManager
-from pgmanager.forms import PGManagerForm, PGManagerSeacrhForm
+from pgmanager.models import PGManager, UserProfile
+from pgmanager.forms import PGManagerForm, PGManagerSeacrhForm,\
+UserPfrofileCreation
 from django.core.paginator import Paginator
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate
+from django.contrib.auth.views import login, logout
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+def signout_view(request):
+	if request.method=="POST":
+		logout(request)
+		return redirect("/")
+	return render(request, "pgmanager/signout.html")
 def login_view(request):
 	form = AuthenticationForm()
 	msg=""
 	if request.method=="POST":
 		data = request.POST
 		username=data["username"]
+		if "@" in username and "." in username:
+			user = UserProfile.objects.filter(email=username)
+			if not user:
+				msg="Invalid credentials"
+				return render(request,"pgmanager/login.html",
+				{"form":form,"messages":msg})	
+			else:
+				username=user[0].username
 		password=data["password"]
 		user=authenticate(username=username, password=password)
 		if user:
-				msg="LOGIN SUCCESS"
+			login(request,user)
+			request.session["username"]=user.username
+			msg="LOGIN SUCCESS"
+			return redirect("/home/")
 		else:
-				msg= "Invalid creadentials"
+			msg= "Invalid creadentials"
 	return render(request,"pgmanager/login.html",
 		{"form":form,"messages":msg})
 
 def register_view(request):
-	form = UserCreationForm()
+	form = UserPfrofileCreation()#UserCreationForm()
 	msg=""
 	if request.method=="POST":
-		form = UserCreationForm(request.POST)
+		form = UserPfrofileCreation(request.POST)
 		if form.is_valid():
 			form.save()
+			form.instance.set_password(form.data["password"])
+			form.instance.save()
 			msg="User created successfully"
 		else:
 			msg= form._errors
@@ -41,6 +62,7 @@ def home_view(request):
 def index_view(request):
 	return render(request,"pgmanager/index.html")
 
+@login_required(login_url="/login/")
 def pgmanagers_view(request):
 	
 	form = PGManagerSeacrhForm(request.POST)
@@ -75,7 +97,7 @@ def pgmanagers_view(request):
 		{"data":page_details,
 		"form":form,
 		"page_details":pagination_details})
-
+@login_required(login_url="/login/")
 def pgm_delete_view(request, pk):
 	message=""
 	pgm_instance = PGManager.objects.get(id=pk)
@@ -87,7 +109,7 @@ def pgm_delete_view(request, pk):
 		return redirect("/pgmanagers/")
 	return render(request,"pgmanager/pgm_delete_form.html",
 		{"message":message,"form":form})
-
+@login_required(login_url="/login/")
 def pgm_update_view(request, pk):
 	message=""
 	pgm_instance=PGManager.objects.get(id=pk)
@@ -104,7 +126,7 @@ def pgm_update_view(request, pk):
 	return render(request, "pgmanager/pgm_update_form.html",
 		{"message":message, "form":form})
 
-
+@login_required(login_url="/login/")
 def pgm_create_view(request):
 	# read templates/pgm_create.html
 	#return HttpResponse(resp)
