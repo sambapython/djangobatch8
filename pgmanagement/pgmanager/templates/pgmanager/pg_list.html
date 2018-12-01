@@ -1,0 +1,21 @@
+{% extends 'pgmanager/base.html'%}
+{% block content%}
+	<h4><a href="/pg_create/">Create PG</a></h4>
+
+	<table>
+		<tr>
+			<th>Address</th>
+			<th>PGMANAGER</th>
+		</tr>
+		{% for object in object_list%}
+			<tr>
+				<td>{{ object.address}}</td>
+				<td>{{ object.pgmanager}}</td>
+				<td><a href="/pg_update/{{object.id}}/">UPDATE</a>
+					<a href="/pg_delete/{{object.id}}/">DELETE</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+
+{% endblock%}

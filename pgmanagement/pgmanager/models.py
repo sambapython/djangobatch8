@@ -37,6 +37,9 @@ class PGManager(AbstractPGManager):
 	cell = models.CharField(max_length=14,
 		validators=[cellvalidation], unique=True)
 	email = models.EmailField(unique=True)
+
+	def __str__(self):
+		return "%s, %s"%(self.name,self.cell)
 	
 
 

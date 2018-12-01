@@ -17,19 +17,45 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.http import HttpResponse
 from pgmanager.views import pgm_create_view, pgm_update_view,\
-pgm_delete_view, pgmanagers_view, index_view, home_view, register_view,\
+pgm_delete_view, pgmanagers_view, home_view, register_view,\
 login_view,signout_view
+from django.views.generic import TemplateView, ListView, CreateView,\
+UpdateView, DeleteView
+from pgmanager.models import PG
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^pgmanager_create/', pgm_create_view),
     url(r'^pgmanager_update/([0-9]+)', pgm_update_view),
     url(r'^pgmanager_delete/([0-9]+)', pgm_delete_view),
     url(r'^pgmanagers/', pgmanagers_view),
-    url(r'^$',index_view),
+    url(r'^$',TemplateView.as_view(
+        template_name="pgmanager/index.html")),
     url(r'^home/', home_view),
     url(r'^register/', register_view),
     url(r'^register/', register_view),
     url(r'^login/', login_view),
     url(r'^signout/', signout_view),
+    url(r'^pgs/', ListView.as_view(
+        model=PG,
+        #template_name="pgmanager/",
+        #queryset=PG.objects.all(),
+        # fields=
+        )),
+    url(r'^pg_create/',CreateView.as_view(
+        model=PG,
+        fields="__all__",
+        success_url='/pgs/'
+        )),
+    url(r'^pg_update/(?P<pk>[0-9]+)',UpdateView.as_view(
+        model=PG,
+        fields="__all__",
+        success_url='/pgs/'
+        )),
+    url(r'^pg_delete/(?P<pk>[0-9]+)',DeleteView.as_view(
+        model=PG,
+        success_url='/pgs/'
+        )),
+    
+
 
 ]

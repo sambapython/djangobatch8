@@ -37,6 +37,9 @@ def login_view(request):
 			login(request,user)
 			request.session["username"]=user.username
 			msg="LOGIN SUCCESS"
+			next_url = request.GET.get("next",None)
+			if next_url:
+				return redirect(next_url)
 			return redirect("/home/")
 		else:
 			msg= "Invalid creadentials"
@@ -57,12 +60,14 @@ def register_view(request):
 			msg= form._errors
 	return render(request,"pgmanager/reg.html",
 		{"form":form,"messages":msg})
+@login_required
 def home_view(request):
 	return render(request,"pgmanager/home.html")
-def index_view(request):
-	return render(request,"pgmanager/index.html")
+	
+# def index_view(request):
+# 	return render(request,"pgmanager/index.html")
 
-@login_required(login_url="/login/")
+@login_required
 def pgmanagers_view(request):
 	
 	form = PGManagerSeacrhForm(request.POST)
@@ -97,7 +102,7 @@ def pgmanagers_view(request):
 		{"data":page_details,
 		"form":form,
 		"page_details":pagination_details})
-@login_required(login_url="/login/")
+@login_required
 def pgm_delete_view(request, pk):
 	message=""
 	pgm_instance = PGManager.objects.get(id=pk)
@@ -109,7 +114,7 @@ def pgm_delete_view(request, pk):
 		return redirect("/pgmanagers/")
 	return render(request,"pgmanager/pgm_delete_form.html",
 		{"message":message,"form":form})
-@login_required(login_url="/login/")
+@login_required
 def pgm_update_view(request, pk):
 	message=""
 	pgm_instance=PGManager.objects.get(id=pk)
@@ -126,7 +131,7 @@ def pgm_update_view(request, pk):
 	return render(request, "pgmanager/pgm_update_form.html",
 		{"message":message, "form":form})
 
-@login_required(login_url="/login/")
+@login_required
 def pgm_create_view(request):
 	# read templates/pgm_create.html
 	#return HttpResponse(resp)
