@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.http import HttpResponse
 from pgmanager.views import pgm_create_view, pgm_update_view,\
@@ -23,6 +23,7 @@ from django.views.generic import TemplateView, ListView, CreateView,\
 UpdateView, DeleteView
 from pgmanager.models import PG
 urlpatterns = [
+    url(r'^api/', include("api.urls")),
     url(r'^admin/', admin.site.urls),
     url(r'^pgmanager_create/', pgm_create_view),
     url(r'^pgmanager_update/([0-9]+)', pgm_update_view),
@@ -55,7 +56,4 @@ urlpatterns = [
         model=PG,
         success_url='/pgs/'
         )),
-    
-
-
 ]
