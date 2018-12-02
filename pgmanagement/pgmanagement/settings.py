@@ -122,3 +122,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 AUTH_USER_MODEL="pgmanager.UserProfile"
 LOGIN_URL="/login/"
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+    "DEFAULT_PERMISSION_CLASSES":(
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",)
+}

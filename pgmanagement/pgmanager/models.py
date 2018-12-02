@@ -9,11 +9,11 @@ from django.contrib.auth.models import AbstractUser
 def namevalidation(value):
 	if not value.isalnum():
 		raise ValidationError("not a valid name")
-def cellvalidation(value):
-	if not value.isdigit():
-		raise ValidationError("Expecting only 10 digit number")
-	elif len(value)!=10:
-		raise ValidationError("Expecting only 10 digit number")
+# def cellvalidation(value):
+# 	if not value.isdigit():
+# 		raise ValidationError("Expecting only 10 digit number")
+# 	elif len(value)!=10:
+# 		raise ValidationError("Expecting only 10 digit number")
 
 class UserProfile(AbstractUser):
 	roles=[('s',"Student"),("p","PGManager")]
@@ -34,8 +34,7 @@ class PGManager(AbstractPGManager):
 						("F","Female")]
 	gender=models.CharField(choices=gender_choices,
 		max_length=2)
-	cell = models.CharField(max_length=14,
-		validators=[cellvalidation], unique=True)
+	cell = models.CharField(max_length=14,unique=True)
 	email = models.EmailField(unique=True)
 
 	def __str__(self):
