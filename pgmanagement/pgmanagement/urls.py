@@ -21,7 +21,9 @@ pgm_delete_view, pgmanagers_view, home_view, register_view,\
 login_view,signout_view
 from django.views.generic import TemplateView, ListView, CreateView,\
 UpdateView, DeleteView
-from pgmanager.models import PG
+from pgmanager.models import PG, Room
+from django.conf.urls.static import static
+from django.conf import settings
 urlpatterns = [
     url(r'^api/', include("api.urls")),
     url(r'^admin/', admin.site.urls),
@@ -56,4 +58,22 @@ urlpatterns = [
         model=PG,
         success_url='/pgs/'
         )),
-]
+    url(r'^room_create/',CreateView.as_view(
+        model=Room,
+        fields="__all__",
+        success_url='/rooms/'
+        )),
+    url(r'^room_update/(?P<pk>[0-9]+)',UpdateView.as_view(
+        model=Room,
+        fields="__all__",
+        success_url='/rooms/'
+        )),
+    url(r'^room_delete/(?P<pk>[0-9]+)',DeleteView.as_view(
+        model=Room,
+        success_url='/rooms/'
+        )),
+    url(r'^rooms/',ListView.as_view(
+        model=Room
+        )),
+
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

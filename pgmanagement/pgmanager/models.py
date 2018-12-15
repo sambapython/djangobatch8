@@ -52,6 +52,7 @@ class PG(AbstractPGManager):
 class Room(AbstractPGManager):
 	type_choices=[("AC","AC ROOM"),
 				  ("NAC","Non AC ROOM")]
+	pic = models.ImageField(blank=True)
 	type=models.CharField(choices=type_choices, max_length=3)
 	cost=models.IntegerField()
 	strength=models.IntegerField(blank=True, default=1)
@@ -66,4 +67,7 @@ class child2(models.Model):
 	parent=models.OneToOneField(Parent)
 	status=models.BooleanField(default=True)
 
+class Track(models.Model):
+	url=models.CharField(max_length=250, blank=True)
+	status_cod=models.IntegerField(blank=True)
 

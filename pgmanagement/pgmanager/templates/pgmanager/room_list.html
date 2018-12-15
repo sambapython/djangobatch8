@@ -1,0 +1,27 @@
+{% extends 'pgmanager/base.html'%}
+{% block content%}
+	<h4><a href="/room_create/">Create ROOM</a></h4>
+
+	<table>
+		<tr>
+			<th>pic</th>
+			<th>type</th>
+			<th>cost</th>
+			<th>strength</th>
+			<th>pg</th>
+		</tr>
+		{% for object in object_list%}
+			<tr>
+				<td><img src="/media/{{ object.pic}}" width="50" height="50"></td>
+				<td>{{ object.type}}</td>
+				<td>{{ object.cost}}</td>
+				<td>{{ object.strength}}</td>
+				<td>{{ object.pg.name}}</td>
+				<td><a href="/room_update/{{object.id}}/">UPDATE</a>
+					<a href="/room_delete/{{object.id}}/">DELETE</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+
+{% endblock%}
