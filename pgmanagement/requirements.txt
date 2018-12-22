@@ -1,0 +1,4 @@
+Django==1.11
+djangorestframework==3.9.0
+pytz==2018.7
+pillow

@@ -1,0 +1,99 @@
+LOG in to your development vm.
+Run the below command.
+pip freeze > requirements.txt
+and push your code to git
+
+LOGinto your deployment VM and follow the below steps.
+
+sudo apt-get install python
+sudo apt-get install python-pip
+sudo apt-get install git
+pip install virtualenv
+virtualenv pgmanagement --python=/usr/bin/python
+source pgmanagement/bin/activate
+git clone http://github.com/sambapython/djangobatch8.git
+cd WMS
+open settings.py file and add the database changes. make sure that you created the db in that.
+pip install -r requiements.txt
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py collect static
+python manage.py runserver
+
+close the above server
+pip install gunicorn
+test gunicorn server using below command
+gunicorn --bind 0.0.0.0:9000 pgmanagement.wsgi
+
+make sure that you are able to access your site.
+
+sudo apt-get install nginx
+
+check whether the nginx installed properly or not using http://localhost
+
+the above link should show welcome screen
+
+add your above service to proxy
+take a backup of /etc/nginx/sites-available/default
+ sudo vi /etc/nginx/sites-available/default
+add the below content
+
+server{
+    listen 80;
+    server_name localhost;
+    location /{
+        proxy_pass "http://localhost:9000";
+}
+
+}
+
+
+
+
+sudo systemctl reload nginx
+sudo systemctl restart nginx
+sudo systemctl status nginx
+
+make sure that is active and running fine.
+
+
+
+Make gunicorn server as service
+close the gunicorn. will make gunicorn server as service now.
+sudo vi /etc/systemd/system/gunicorn.service
+
+add the below content:
+
+[Unit]
+Description=WMS gunicorn server
+After=network.target
+
+[Service]
+User=khyaathipython
+Group=www-data
+WorkingDirectory=/home/khyaathipython/pgmanagement/pgmanagement
+ExecStart=/home/khyaathipython/pgmanagement/bin/gunicorn --access-logfile - --workers 3 --bind 0.0.0.0:9000 pgmanagement.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+After that run the below commands..
+
+sudo systemctl start gunicorn
+sudo systemctl enable gunicorn
+
+
+
+
+
+Check your site using any browser.
+
+
+
+
+
+
+
+
+
