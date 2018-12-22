@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.http import HttpResponse
 from pgmanager.views import pgm_create_view, pgm_update_view,\
 pgm_delete_view, pgmanagers_view, home_view, register_view,\
-login_view,signout_view
+login_view,signout_view, pgmanagers_detailed_view
 from django.views.generic import TemplateView, ListView, CreateView,\
 UpdateView, DeleteView
 from pgmanager.models import PG, Room
@@ -30,7 +30,8 @@ urlpatterns = [
     url(r'^pgmanager_create/', pgm_create_view),
     url(r'^pgmanager_update/([0-9]+)', pgm_update_view),
     url(r'^pgmanager_delete/([0-9]+)', pgm_delete_view),
-    url(r'^pgmanagers/', pgmanagers_view),
+    url(r'^pgmanagers/(?P<pk>[0-9]+)', pgmanagers_detailed_view),
+    url(r'^pgmanagers/$', pgmanagers_view),
     url(r'^$',TemplateView.as_view(
         template_name="pgmanager/index.html")),
     url(r'^home/', home_view),

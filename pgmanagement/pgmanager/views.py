@@ -11,6 +11,14 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate
 from django.contrib.auth.views import login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.cache import cache
+def pgmanagers_detailed_view(request, pk=None):
+	obj = cache.get("PGManager-%s"%pk)
+	if not obj:
+		obj = PGManager.objects.get(pk=pk)
+		cache.set("PGManager-%s"%pk, obj)
+	return render(request,"pgmanager/pgm_detailed_view.html",
+		{"data":obj})
 # Create your views here.
 def signout_view(request):
 	if request.method=="POST":
@@ -123,6 +131,7 @@ def pgm_update_view(request, pk):
 			instance=pgm_instance)
 		if form.is_valid():
 			form.save()
+			cache.delete("PGManager-%s"%pk)
 			return redirect("/pgmanagers/")
 		else:
 			message=form._errors

@@ -1,0 +1,55 @@
+add the below settings into settings file
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+    }
+}
+
+run the below command to create table in the database.
+python manage.py createcachetable
+
+to save into cache: cache.set(key, value)
+to get from cache: cache.get(key)
+to delete from cache: casche.delete(key)
+
+maintain multiple databases:
+add one more dictionary in the DATABASES section of settings.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'replication': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db_replica.sqlite3'),
+    }
+}
+
+Now need to migrate with the key of DATABASES: 
+python manage.py migrate --database replication
+
+while we are inserting or updating or getting need to metion the key name of database.
+example: 
+m1  = PGManager(name="replica_manager",email="replica_manage@gmail.com",cell="9676622045",gender="M")
+ m1.save(using="replication")
+
+m1  = PGManager(name="replica_manager6",email="replica_manager6@gmail.com",cell="9676622046",gender="M")
+
+from django.conf import settings
+[m1.save(using=db) for db in settings.DATABASES.keys()]
+
+seding an email:
+add below lines into settings:
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_PORT=587
+EMAIL_HOST_USER="sambaodoo@gmail.com"
+EMAIL_HOST_PASSWORD=""
+EMAIL_USE_TLS=True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+And run the below lines in the shell  to test 
+
+ from django.core.mail import send_mail
+ send_mail('sendign email through my app','hello','sambaodoo@gmail.com',['pythonista.hlp@gmail.com','veereshpsr@gm
+   ...: ail.com'], fail_silently=False)
